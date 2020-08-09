@@ -1,0 +1,27 @@
+{
+  "name": "plain-json-editor",
+  "version": "1.0.0",
+  "license": "MIT",
+  "files" : [
+	"index.js",
+	"index.d.ts",
+	"dist"
+  ],
+  "source": "index.js",
+  "types" : "index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-hotkeys-hook": "^2.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.44",
+    "@types/react-dom": "^16.9.8",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.9.7"
+  }
+}

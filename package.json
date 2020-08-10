@@ -11,7 +11,11 @@
   "types" : "index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+	"build:demo": "cd demo && yarn run build",
+	"build:all": "yarn run build && yarn run build:demo",
+	"prepublishOnly": "yarn run build:all",
+	"predev": "yarn run build",
+	"dev": "cd demo && yarn run start"
   },
   "dependencies": {
     "react": "^16.13.1",

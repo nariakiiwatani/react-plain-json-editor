@@ -7,8 +7,8 @@
       "es2019",
       "dom"
     ],
-    "allowJs": true, // jsコンパイル用
-    "checkJs": true,  // js簡易型チェック
+    "allowJs": true,
+    "checkJs": true,
     "sourceMap": true,
     "inlineSources": true,
     "outDir": "./dist/",

@@ -50,8 +50,6 @@ _note: all properties are optional._
 	// if you set the styles, they are merged into default styles(see src/PlainJsonEditor.tsx).
 	// default: {}
 	styles={{
-		// root: {},
-		// error: {},
 		textarea: {
 			backgroundColor: "rgba(0,0,0,0.8)",
 			color: "#CFF",
@@ -85,9 +83,12 @@ function YourComponent = () => {
 	})
 	return (
 		<textarea
+			// bind useJsonEditor hook with an element
 			ref={editorRef}
 			// if you need onChange event, you can pass it as usual
 			onChange={handleChange}
+			// other properties are of course valid because it is a normal textarea
+			// value=""
 		/>
 	)
 }

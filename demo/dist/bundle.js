@@ -29431,6 +29431,8 @@ var App = function () {
     return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", { style: style },
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "PlainJsonEditor Demo"),
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null,
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", { href: "https://github.com/nariakiiwatani/react-plain-json-editor" }, "GitHub")),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null,
             "You can write something into the textarea and it will be automatically parsed to JSON.",
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
             "In this demo you can edit this page's style(CSS)."),

@@ -2,6 +2,12 @@
   "name": "plain-json-editor",
   "version": "1.0.0",
   "license": "MIT",
+  "description": "Provide a simple JSON editor for React",
+  "repository": {
+	  "type": "git",
+	  "url": "git+https://github.com/nariakiiwatani/react-plain-json-editor"
+  },
+  "keywords": ["React","React Hooks","JSON"],
   "files" : [
 	"index.js",
 	"index.d.ts",

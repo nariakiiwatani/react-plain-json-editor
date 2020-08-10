@@ -62,10 +62,8 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 
 	const mergedStyles = useMemo(() => ({
 		root: {
-			position: "absolute",
-			bottom: 0,
 			width: "100vw",
-			height: "30vh",
+			height: "50vh",
 			...styles.root
 		} as CSSProperties,
 		textarea: {

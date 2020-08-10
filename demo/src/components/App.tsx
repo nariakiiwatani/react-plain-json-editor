@@ -21,6 +21,7 @@ const App = () => {
 	return (
 		<div style={style}>
 			<h1>PlainJsonEditor Demo</h1>
+			<div><a href="https://github.com/nariakiiwatani/react-plain-json-editor">GitHub</a></div>
 			<div>You can write something into the textarea and it will be automatically parsed to JSON.<br />
 				In this demo you can edit this page's style(CSS).</div>
 			<p>Submit key: Command+Enter or Ctrl+Enter</p>

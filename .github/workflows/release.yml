@@ -5,13 +5,13 @@ jobs:
   release_package:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
-      - name: "npm ci"
-        run: npm ci
+      - name: "yarn install --frozen-lockfile"
+        run: yarn install --frozen-lockfile
 
-      - name: "npm run semantic-release"
-        run: npm run semantic-release
+      - name: "yarn run semantic-release"
+        run: yarn run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

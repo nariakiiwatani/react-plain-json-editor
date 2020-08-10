@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, CSSProperties, useEffect } from 'react'
-import { useHotkeys } from "react-hotkeys-hook";
+import { useJsonEditor } from "./useJsonEditor";
 
 type PlainJsonEditorProps = {
 	value: {},
@@ -41,8 +41,7 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 			showInnerError && setErrorText(`${e.name}:${e.message}`)
 		}
 	}, [setText, serializer])
-	const handleSubmit = useCallback(() => {
-		const result = serializer(text)
+	const handleSubmit = useCallback((result: {}) => {
 		try {
 			onSubmit(result)
 			if (formatAfterSubmit) {
@@ -54,22 +53,13 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 			showInnerError && setErrorText(`${e.name}:${e.message}`)
 		}
 	}, [onSubmit, text])
-	const ref = useHotkeys<HTMLTextAreaElement>(["tab", ...submitKeys].join(','), (event, handler) => {
-		event.preventDefault()
-		const target = ref.current
-		if (!target) return
-		if (submitKeys.some(key => key === handler.key)) {
-			handleSubmit();
-		}
-		else {
-			switch (handler.key) {
-				case "tab":
-					target.setRangeText("\t")
-					target.selectionStart += 1
-					break
-			}
-		}
-	}, { enableOnTags: ['TEXTAREA'] }, [handleSubmit, submitKeys])
+	const ref = useJsonEditor({
+		onSubmit: handleSubmit,
+		onError: (e: Error) => { showInnerError && setErrorText(`${e.name}:${e.message}`) },
+		submitKeys,
+		serializer,
+	})
+
 	const mergedStyles = useMemo(() => ({
 		root: {
 			position: "absolute",
@@ -108,11 +98,11 @@ PlainJsonEditor.defaultProps = {
 	value: {},
 	onChange: (_: {}) => { },
 	onSubmit: (_: {}) => { },
-	errorText: "",
+	error: "",
 	showInnerError: true,
 	submitKeys: ['command+enter', 'ctrl+enter'],
 	serializer: JSON.parse,
-	deserializer: (str: string) => JSON.stringify(str, null, 2),
+	deserializer: (json: {}) => JSON.stringify(json, null, 2),
 	formatAfterSubmit: true,
 	styles: {}
 };

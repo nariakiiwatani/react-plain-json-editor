@@ -1,2 +1,3 @@
 import { PlainJsonEditor } from './dist/PlainJsonEditor'
-export { PlainJsonEditor }
+import { useJsonEditor } from './dist/useJsonEditor'
+export { PlainJsonEditor, useJsonEditor }

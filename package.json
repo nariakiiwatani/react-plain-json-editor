@@ -1,28 +1,32 @@
 {
-  "name": "plain-json-editor",
-  "version": "1.0.0",
+  "name": "react-plain-json-editor",
+  "version": "1.0.1",
   "author": "nariakiiwatani <nariakiiwatani@annolab.com> (https://github.com/nariakiiwatani",
   "license": "MIT",
   "description": "Provide a simple JSON editor for React",
   "repository": {
-	  "type": "git",
-	  "url": "git+https://github.com/nariakiiwatani/react-plain-json-editor"
+    "type": "git",
+    "url": "git+https://github.com/nariakiiwatani/react-plain-json-editor"
   },
-  "keywords": ["React","React Hooks","JSON"],
-  "files" : [
-	"index.js",
-	"index.d.ts",
-	"dist"
+  "keywords": [
+    "React",
+    "React Hooks",
+    "JSON"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "dist"
   ],
   "source": "index.js",
-  "types" : "index.d.ts",
+  "types": "index.d.ts",
   "scripts": {
     "build": "tsc",
-	"build:demo": "cd demo && yarn run build",
-	"build:all": "yarn run build && yarn run build:demo",
-	"prepublishOnly": "yarn run build:all && cp demo/dist/* docs",
-	"predev": "yarn run build",
-	"dev": "cd demo && yarn run start"
+    "build:demo": "cd demo && yarn run build",
+    "build:all": "yarn run build && yarn run build:demo",
+    "prepublishOnly": "yarn run build:all && cp demo/dist/* docs",
+    "predev": "yarn run build",
+    "dev": "cd demo && yarn run start"
   },
   "dependencies": {
     "react": "^16.13.1",

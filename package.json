@@ -26,7 +26,8 @@
     "build:all": "yarn run build && yarn run build:demo",
     "prepublishOnly": "yarn run build:all && cp demo/dist/* docs",
     "predev": "yarn run build",
-    "dev": "cd demo && yarn run start"
+    "dev": "cd demo && yarn run start",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "react": "^16.13.1",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@types/react": "^16.9.44",
     "@types/react-dom": "^16.9.8",
+    "semantic-release": "^17.1.1",
     "tsc": "^1.20150623.0",
     "typescript": "^3.9.7"
   }

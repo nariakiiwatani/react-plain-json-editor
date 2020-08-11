@@ -179,7 +179,7 @@ exports.PlainJsonEditor = function (props) {
         return ({
             root: __assign({ width: "100vw", height: "50vh" }, styles.root),
             textarea: __assign({ backgroundColor: "rgba(255,255,255,0.5)", width: "100%", height: "100%" }, styles.textarea),
-            error: __assign({ position: "absolute", backgroundColor: "rgba(100,100,100,0.8)", borderRadius: "12px", padding: "12px", color: "white", transform: "translate(-50%,-50%)", top: "50%", left: "50%" }, styles.error)
+            error: __assign({ position: "absolute", backgroundColor: "rgba(100,100,100,0.75)", borderRadius: "12px", padding: "12px", color: "white", transform: "translate(-50%,-50%)", top: "50%", left: "50%" }, styles.error)
         });
     }, [styles]);
     return (react_1.default.createElement("div", { style: mergedStyles.root }, react_1.default.createElement("textarea", { ref: ref, style: mergedStyles.textarea, value: text, onChange: handleChange }), errorText && react_1.default.createElement("div", { style: mergedStyles.error }, errorText)));

@@ -173,7 +173,7 @@ exports.PlainJsonEditor = function (props) {
         onSubmit: handleSubmit,
         onError: function (e) { showInnerError && setErrorText(e.name + ":" + e.message); },
         submitKeys: submitKeys,
-        serializer: serializer,
+        serializer: serializer
     });
     var mergedStyles = react_1.useMemo(function () {
         return ({

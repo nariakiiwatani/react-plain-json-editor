@@ -31,7 +31,7 @@
     "prepublishOnly": "yarn run build",
     "semantic-release": "semantic-release"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hotkeys-hook": "^2.2.2"

@@ -1665,6 +1665,11 @@ homedir-polyfill@^1.0.1:
   dependencies:
     parse-passwd "^1.0.0"
 
+hotkeys-js@3.8.1:
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.8.1.tgz#fa7051f73bf1dc92a8b8d580a40b247f91966376"
+  integrity sha512-YlhVQtyG9f1b7GhtzdhR0Pl+cImD1ZrKI6zYUa7QLd0zuThiL7RzZ+ANJyy7z+kmcCpNYBf5PjBa3CjiQ5PFpw==
+
 hpack.js@^2.1.6:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/hpack.js/-/hpack.js-2.1.6.tgz#87774c0949e513f42e84575b3c45681fade2a0b2"
@@ -2868,10 +2873,26 @@ react-dom@^16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
+react-hotkeys-hook@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/react-hotkeys-hook/-/react-hotkeys-hook-2.2.2.tgz#ed47e3753b85cf7c1123ec9121282397cf875fe9"
+  integrity sha512-5XBGCSleJZ7AzQ+wCoFeJj/myByIzqgR3D97xRNEQsGOsFvXLp4V8rbDbHceTqGq7WDjQmX96zegViz8U5CwMQ==
+  dependencies:
+    hotkeys-js "3.8.1"
+
 react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-plain-json-editor@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-plain-json-editor/-/react-plain-json-editor-1.1.0.tgz#4017b6c7673e830cab9f55c910cdba89495ae1ce"
+  integrity sha512-sHjyj5PsbfdYnEY2mAuRF8LdxoY89JsujB3an0rjJy3oUcQqJ6YmeN9rI4JjVWBgip7Cdbf/gXndKD0jqdDwiA==
+  dependencies:
+    react "^16.13.1"
+    react-dom "^16.13.1"
+    react-hotkeys-hook "^2.2.2"
 
 react@^16.13.1:
   version "16.13.1"

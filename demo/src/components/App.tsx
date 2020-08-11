@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react'
 // This import is only for this demo to use the newest version.
-import { PlainJsonEditor } from '../../../dist/PlainJsonEditor'
+//import { PlainJsonEditor } from '../../../'
 // you would do `npm i react-plain-json-editor` and import it
-// import { PlainJsonEditor } from 'react-plain-json-editor'
+import { PlainJsonEditor } from 'react-plain-json-editor'
 
 const App = () => {
 	const [style, setStyle] = useState<{}>({

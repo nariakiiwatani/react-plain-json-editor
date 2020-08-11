@@ -21,12 +21,10 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "tsc",
-    "build:demo": "cd demo && yarn run build",
+    "build:demo": "cd demo && yarn run build && cp dist/* ../docs",
     "build:all": "yarn run build && yarn run build:demo",
     "predev": "yarn run build",
 	"dev": "cd demo && yarn run start",
-	"predeploy": "yarn build:all && cp demo/dist/* docs && git reset",
-	"deploy": "git add docs && git commit -m 'chore: auto commit for deploying' && git push",
 	"prepublishOnly": "yarn run build",
     "semantic-release": "semantic-release"
   },

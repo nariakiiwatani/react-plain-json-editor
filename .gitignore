@@ -1,4 +1,4 @@
-.vscode
-*.tgz
-dist
-node_modules
+/.vscode
+/*.tgz
+/dist
+/node_modules

@@ -74,7 +74,7 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 		} as CSSProperties,
 		error: {
 			position: "absolute",
-			backgroundColor: "rgba(100,100,100,0.8)",
+			backgroundColor: "rgba(100,100,100,0.75)",
 			borderRadius: "12px",
 			padding: "12px",
 			color: "white",

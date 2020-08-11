@@ -26,9 +26,7 @@
     "predev": "yarn run build",
 	"dev": "cd demo && yarn run start",
 	"predeploy": "yarn build:all && cp demo/dist/* docs && git reset",
-	"deploy:dist": "git add dist && git commit -m 'feat: auto commit for deploying'",
-	"deploy:docs": "git add docs && git commit -m 'chore: auto commit for deploying'",
-	"deploy": "yarn run deploy:dist && yarn run deploy:docs && git push",
+	"deploy": "git add docs && git commit -m 'chore: auto commit for deploying' && git push",
     "semantic-release": "semantic-release"
   },
   "dependencies": {

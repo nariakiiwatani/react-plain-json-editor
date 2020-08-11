@@ -20,12 +20,15 @@
   "source": "index.js",
   "types": "index.d.ts",
   "scripts": {
+    "setup": "yarn install",
+    "setup:demo": "cd demo && yarn install",
+    "setup:all": "yarn run setup && yarn setup:demo",
     "build": "tsc",
-    "build:demo": "cd demo && yarn run build && cp dist/* ../docs",
+    "build:demo": "cd demo && yarn run build",
     "build:all": "yarn run build && yarn run build:demo",
     "predev": "yarn run build",
-	"dev": "cd demo && yarn run start",
-	"prepublishOnly": "yarn run build",
+    "dev": "cd demo && yarn run start",
+    "prepublishOnly": "yarn run build",
     "semantic-release": "semantic-release"
   },
   "dependencies": {

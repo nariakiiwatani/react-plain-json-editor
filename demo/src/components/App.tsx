@@ -46,7 +46,6 @@ const App = () => {
 			//	serializer={JSON.parse}
 			//	deserializer={json => { return JSON.stringify(json, null, 2) }}
 			//	formatAfterSubmit={true}
-			//	styles={{}}
 			/>
 		</div>
 	)

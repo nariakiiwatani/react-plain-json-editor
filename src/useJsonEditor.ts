@@ -17,6 +17,7 @@ export const useJsonEditor = ({
 			onError(e)
 		}
 	}, [serializer, onSubmit, onError])
+
 	const ref = useHotkeys<HTMLTextAreaElement>(["tab", ...submitKeys].join(','), (e, handler) => {
 		e.preventDefault()
 		const target = ref.current

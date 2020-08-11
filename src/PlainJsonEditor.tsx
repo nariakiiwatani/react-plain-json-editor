@@ -22,6 +22,7 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 	const { value, onChange, onSubmit, error, showInnerError,
 		submitKeys, serializer, deserializer, formatAfterSubmit,
 		styles } = props
+
 	const [text, setText] = useState(() => deserializer(value))
 	const [errorText, setErrorText] = useState(error)
 	useEffect(() => {
@@ -30,6 +31,7 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 	const clearErrorText = useCallback(() => {
 		setErrorText("")
 	}, [setErrorText])
+
 	const handleChange = useCallback(e => {
 		const v = e.target.value
 		setText(v)
@@ -41,6 +43,7 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 			showInnerError && setErrorText(`${e.name}:${e.message}`)
 		}
 	}, [setText, serializer])
+
 	const handleSubmit = useCallback((result: {}) => {
 		try {
 			onSubmit(result)
@@ -53,6 +56,7 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 			showInnerError && setErrorText(`${e.name}:${e.message}`)
 		}
 	}, [onSubmit, text])
+
 	const ref = useJsonEditor({
 		onSubmit: handleSubmit,
 		onError: (e: Error) => { showInnerError && setErrorText(`${e.name}:${e.message}`) },
@@ -84,6 +88,7 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 			...styles.error
 		} as CSSProperties
 	}), [styles])
+
 	return (
 		<div style={mergedStyles.root}>
 			<textarea ref={ref} style={mergedStyles.textarea} value={text} onChange={handleChange} />

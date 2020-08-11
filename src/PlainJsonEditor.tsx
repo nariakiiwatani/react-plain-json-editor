@@ -57,7 +57,7 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 		onSubmit: handleSubmit,
 		onError: (e: Error) => { showInnerError && setErrorText(`${e.name}:${e.message}`) },
 		submitKeys,
-		serializer,
+		serializer
 	})
 
 	const mergedStyles = useMemo(() => ({

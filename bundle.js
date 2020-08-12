@@ -86,10 +86,204 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/hotkeys-js/dist/hotkeys.esm.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/hotkeys-js/dist/hotkeys.esm.js ***!
-  \*****************************************************/
+/***/ "../dist/PlainJsonEditor.js":
+/*!**********************************!*\
+  !*** ../dist/PlainJsonEditor.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s)
+                if (Object.prototype.hasOwnProperty.call(s, p))
+                    t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function (o, m, k, k2) {
+    if (k2 === undefined)
+        k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
+}) : (function (o, m, k, k2) {
+    if (k2 === undefined)
+        k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function (o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function (o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule)
+        return mod;
+    var result = {};
+    if (mod != null)
+        for (var k in mod)
+            if (k !== "default" && Object.hasOwnProperty.call(mod, k))
+                __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PlainJsonEditor = void 0;
+var react_1 = __importStar(__webpack_require__(/*! react */ "../node_modules/react/index.js"));
+var useJsonEditor_1 = __webpack_require__(/*! ./useJsonEditor */ "../dist/useJsonEditor.js");
+exports.PlainJsonEditor = function (props) {
+    var value = props.value, onChange = props.onChange, onSubmit = props.onSubmit, error = props.error, showInnerError = props.showInnerError, submitKeys = props.submitKeys, serializer = props.serializer, deserializer = props.deserializer, formatAfterSubmit = props.formatAfterSubmit, styles = props.styles;
+    var _a = react_1.useState(function () { return deserializer(value); }), text = _a[0], setText = _a[1];
+    var _b = react_1.useState(error), errorText = _b[0], setErrorText = _b[1];
+    react_1.useEffect(function () {
+        setErrorText(error);
+    }, [error]);
+    var clearErrorText = react_1.useCallback(function () {
+        setErrorText("");
+    }, [setErrorText]);
+    var handleChange = react_1.useCallback(function (e) {
+        var v = e.target.value;
+        setText(v);
+        try {
+            onChange(serializer(v));
+            showInnerError && clearErrorText();
+        }
+        catch (e) {
+            showInnerError && setErrorText(e.name + ":" + e.message);
+        }
+    }, [setText, serializer]);
+    var handleSubmit = react_1.useCallback(function (result) {
+        try {
+            onSubmit(result);
+            if (formatAfterSubmit) {
+                setText(deserializer(result));
+            }
+            showInnerError && clearErrorText();
+        }
+        catch (e) {
+            showInnerError && setErrorText(e.name + ":" + e.message);
+        }
+    }, [onSubmit, text]);
+    var ref = useJsonEditor_1.useJsonEditor({
+        onSubmit: handleSubmit,
+        onError: function (e) { showInnerError && setErrorText(e.name + ":" + e.message); },
+        submitKeys: submitKeys,
+        serializer: serializer
+    });
+    var mergedStyles = react_1.useMemo(function () {
+        return ({
+            root: __assign({ width: "100vw", height: "50vh" }, styles.root),
+            textarea: __assign({ backgroundColor: "rgba(255,255,255,0.5)", width: "100%", height: "100%" }, styles.textarea),
+            error: __assign({ position: "absolute", backgroundColor: "rgba(100,100,100,0.75)", borderRadius: "12px", padding: "12px", color: "white", transform: "translate(-50%,-50%)", top: "50%", left: "50%" }, styles.error)
+        });
+    }, [styles]);
+    return (react_1.default.createElement("div", { style: mergedStyles.root }, react_1.default.createElement("textarea", { ref: ref, style: mergedStyles.textarea, value: text, onChange: handleChange }), errorText && react_1.default.createElement("div", { style: mergedStyles.error }, errorText)));
+};
+exports.PlainJsonEditor.defaultProps = {
+    value: {},
+    onChange: function (_) { },
+    onSubmit: function (_) { },
+    error: "",
+    showInnerError: true,
+    submitKeys: ['command+enter', 'ctrl+enter'],
+    serializer: JSON.parse,
+    deserializer: function (json) { return JSON.stringify(json, null, 2); },
+    formatAfterSubmit: true,
+    styles: {}
+};
+
+
+/***/ }),
+
+/***/ "../dist/useJsonEditor.js":
+/*!********************************!*\
+  !*** ../dist/useJsonEditor.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++)
+        s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.useJsonEditor = void 0;
+var react_1 = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+var react_hotkeys_hook_1 = __webpack_require__(/*! react-hotkeys-hook */ "../node_modules/react-hotkeys-hook/dist-web/index.js");
+exports.useJsonEditor = function (_a) {
+    var _b = _a.onSubmit, onSubmit = _b === void 0 ? function (_) { } : _b, _c = _a.onError, onError = _c === void 0 ? function (_) { } : _c, _d = _a.submitKeys, submitKeys = _d === void 0 ? ['command+enter', 'ctrl+enter'] : _d, _e = _a.serializer, serializer = _e === void 0 ? JSON.parse : _e;
+    var handleSubmit = react_1.useCallback(function (e) {
+        var value = e.target.value;
+        try {
+            var serialized = serializer(value);
+            onSubmit(serialized);
+        }
+        catch (e) {
+            onError(e);
+        }
+    }, [serializer, onSubmit, onError]);
+    var ref = react_hotkeys_hook_1.useHotkeys(__spreadArrays(["tab"], submitKeys).join(','), function (e, handler) {
+        e.preventDefault();
+        var target = ref.current;
+        if (!target)
+            return;
+        if (submitKeys.some(function (key) { return key === handler.key; })) {
+            handleSubmit(e);
+        }
+        else {
+            switch (handler.key) {
+                case "tab":
+                    target.setRangeText("\t");
+                    target.selectionStart += 1;
+                    break;
+            }
+        }
+    }, { enableOnTags: ['TEXTAREA'] }, [handleSubmit, submitKeys]);
+    return ref;
+};
+
+
+/***/ }),
+
+/***/ "../index.js":
+/*!*******************!*\
+  !*** ../index.js ***!
+  \*******************/
+/*! exports provided: PlainJsonEditor, useJsonEditor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _dist_PlainJsonEditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dist/PlainJsonEditor */ "../dist/PlainJsonEditor.js");
+/* harmony import */ var _dist_PlainJsonEditor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_dist_PlainJsonEditor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PlainJsonEditor", function() { return _dist_PlainJsonEditor__WEBPACK_IMPORTED_MODULE_0__["PlainJsonEditor"]; });
+
+/* harmony import */ var _dist_useJsonEditor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dist/useJsonEditor */ "../dist/useJsonEditor.js");
+/* harmony import */ var _dist_useJsonEditor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_dist_useJsonEditor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useJsonEditor", function() { return _dist_useJsonEditor__WEBPACK_IMPORTED_MODULE_1__["useJsonEditor"]; });
+
+
+
+
+
+
+/***/ }),
+
+/***/ "../node_modules/hotkeys-js/dist/hotkeys.esm.js":
+/*!******************************************************!*\
+  !*** ../node_modules/hotkeys-js/dist/hotkeys.esm.js ***!
+  \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -655,10 +849,10 @@ if (typeof window !== 'undefined') {
 
 /***/ }),
 
-/***/ "./node_modules/object-assign/index.js":
-/*!*********************************************!*\
-  !*** ./node_modules/object-assign/index.js ***!
-  \*********************************************/
+/***/ "../node_modules/object-assign/index.js":
+/*!**********************************************!*\
+  !*** ../node_modules/object-assign/index.js ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -757,10 +951,10 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ "./node_modules/prop-types/checkPropTypes.js":
-/*!***************************************************!*\
-  !*** ./node_modules/prop-types/checkPropTypes.js ***!
-  \***************************************************/
+/***/ "../node_modules/prop-types/checkPropTypes.js":
+/*!****************************************************!*\
+  !*** ../node_modules/prop-types/checkPropTypes.js ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -777,7 +971,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var printWarning = function() {};
 
 if (true) {
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "../node_modules/prop-types/lib/ReactPropTypesSecret.js");
   var loggedTypeFailures = {};
   var has = Function.call.bind(Object.prototype.hasOwnProperty);
 
@@ -871,10 +1065,10 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ "./node_modules/prop-types/lib/ReactPropTypesSecret.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
-  \*************************************************************/
+/***/ "../node_modules/prop-types/lib/ReactPropTypesSecret.js":
+/*!**************************************************************!*\
+  !*** ../node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -895,10 +1089,10 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ "./node_modules/react-dom/cjs/react-dom.development.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/react-dom/cjs/react-dom.development.js ***!
-  \*************************************************************/
+/***/ "../node_modules/react-dom/cjs/react-dom.development.js":
+/*!**************************************************************!*\
+  !*** ../node_modules/react-dom/cjs/react-dom.development.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -920,11 +1114,11 @@ if (true) {
   (function() {
 'use strict';
 
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var _assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
-var Scheduler = __webpack_require__(/*! scheduler */ "./node_modules/scheduler/index.js");
-var checkPropTypes = __webpack_require__(/*! prop-types/checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
-var tracing = __webpack_require__(/*! scheduler/tracing */ "./node_modules/scheduler/tracing.js");
+var React = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+var _assign = __webpack_require__(/*! object-assign */ "../node_modules/object-assign/index.js");
+var Scheduler = __webpack_require__(/*! scheduler */ "../node_modules/scheduler/index.js");
+var checkPropTypes = __webpack_require__(/*! prop-types/checkPropTypes */ "../node_modules/prop-types/checkPropTypes.js");
+var tracing = __webpack_require__(/*! scheduler/tracing */ "../node_modules/scheduler/tracing.js");
 
 var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED; // Prevent newer renderers from RTE when used with older react package versions.
 // Current owner and dispatcher used to share the same ref,
@@ -25919,10 +26113,10 @@ exports.version = ReactVersion;
 
 /***/ }),
 
-/***/ "./node_modules/react-dom/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/react-dom/index.js ***!
-  \*****************************************/
+/***/ "../node_modules/react-dom/index.js":
+/*!******************************************!*\
+  !*** ../node_modules/react-dom/index.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25958,16 +26152,16 @@ function checkDCE() {
 }
 
 if (false) {} else {
-  module.exports = __webpack_require__(/*! ./cjs/react-dom.development.js */ "./node_modules/react-dom/cjs/react-dom.development.js");
+  module.exports = __webpack_require__(/*! ./cjs/react-dom.development.js */ "../node_modules/react-dom/cjs/react-dom.development.js");
 }
 
 
 /***/ }),
 
-/***/ "./node_modules/react-hotkeys-hook/dist-web/index.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/react-hotkeys-hook/dist-web/index.js ***!
-  \***********************************************************/
+/***/ "../node_modules/react-hotkeys-hook/dist-web/index.js":
+/*!************************************************************!*\
+  !*** ../node_modules/react-hotkeys-hook/dist-web/index.js ***!
+  \************************************************************/
 /*! exports provided: useHotkeys, useIsHotkeyPressed */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -25975,8 +26169,8 @@ if (false) {} else {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useHotkeys", function() { return useHotkeys; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useIsHotkeyPressed", function() { return useIsHotkeyPressed; });
-/* harmony import */ var hotkeys_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hotkeys-js */ "./node_modules/hotkeys-js/dist/hotkeys.esm.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var hotkeys_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hotkeys-js */ "../node_modules/hotkeys-js/dist/hotkeys.esm.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -26021,195 +26215,10 @@ function useHotkeys(keys, callback, options, deps) {
 
 /***/ }),
 
-/***/ "./node_modules/react-plain-json-editor/dist/PlainJsonEditor.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/react-plain-json-editor/dist/PlainJsonEditor.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlainJsonEditor = void 0;
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var useJsonEditor_1 = __webpack_require__(/*! ./useJsonEditor */ "./node_modules/react-plain-json-editor/dist/useJsonEditor.js");
-exports.PlainJsonEditor = function (props) {
-    var value = props.value, onChange = props.onChange, onSubmit = props.onSubmit, error = props.error, showInnerError = props.showInnerError, submitKeys = props.submitKeys, serializer = props.serializer, deserializer = props.deserializer, formatAfterSubmit = props.formatAfterSubmit, styles = props.styles;
-    var _a = react_1.useState(function () { return deserializer(value); }), text = _a[0], setText = _a[1];
-    var _b = react_1.useState(error), errorText = _b[0], setErrorText = _b[1];
-    react_1.useEffect(function () {
-        setErrorText(error);
-    }, [error]);
-    var clearErrorText = react_1.useCallback(function () {
-        setErrorText("");
-    }, [setErrorText]);
-    var handleChange = react_1.useCallback(function (e) {
-        var v = e.target.value;
-        setText(v);
-        try {
-            onChange(serializer(v));
-            showInnerError && clearErrorText();
-        }
-        catch (e) {
-            showInnerError && setErrorText(e.name + ":" + e.message);
-        }
-    }, [setText, serializer]);
-    var handleSubmit = react_1.useCallback(function (result) {
-        try {
-            onSubmit(result);
-            if (formatAfterSubmit) {
-                setText(deserializer(result));
-            }
-            showInnerError && clearErrorText();
-        }
-        catch (e) {
-            showInnerError && setErrorText(e.name + ":" + e.message);
-        }
-    }, [onSubmit, text]);
-    var ref = useJsonEditor_1.useJsonEditor({
-        onSubmit: handleSubmit,
-        onError: function (e) { showInnerError && setErrorText(e.name + ":" + e.message); },
-        submitKeys: submitKeys,
-        serializer: serializer
-    });
-    var mergedStyles = react_1.useMemo(function () { return ({
-        root: __assign({ width: "100vw", height: "50vh" }, styles.root),
-        textarea: __assign({ backgroundColor: "rgba(255,255,255,0.5)", width: "100%", height: "100%" }, styles.textarea),
-        error: __assign({ position: "absolute", backgroundColor: "rgba(100,100,100,0.75)", borderRadius: "12px", padding: "12px", color: "white", transform: "translate(-50%,-50%)", top: "50%", left: "50%" }, styles.error)
-    }); }, [styles]);
-    return (react_1.default.createElement("div", { style: mergedStyles.root },
-        react_1.default.createElement("textarea", { ref: ref, style: mergedStyles.textarea, value: text, onChange: handleChange }),
-        errorText && react_1.default.createElement("div", { style: mergedStyles.error }, errorText)));
-};
-exports.PlainJsonEditor.defaultProps = {
-    value: {},
-    onChange: function (_) { },
-    onSubmit: function (_) { },
-    error: "",
-    showInnerError: true,
-    submitKeys: ['command+enter', 'ctrl+enter'],
-    serializer: JSON.parse,
-    deserializer: function (json) { return JSON.stringify(json, null, 2); },
-    formatAfterSubmit: true,
-    styles: {}
-};
-//# sourceMappingURL=PlainJsonEditor.js.map
-
-/***/ }),
-
-/***/ "./node_modules/react-plain-json-editor/dist/useJsonEditor.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/react-plain-json-editor/dist/useJsonEditor.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.useJsonEditor = void 0;
-var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var react_hotkeys_hook_1 = __webpack_require__(/*! react-hotkeys-hook */ "./node_modules/react-hotkeys-hook/dist-web/index.js");
-exports.useJsonEditor = function (_a) {
-    var _b = _a.onSubmit, onSubmit = _b === void 0 ? function (_) { } : _b, _c = _a.onError, onError = _c === void 0 ? function (_) { } : _c, _d = _a.submitKeys, submitKeys = _d === void 0 ? ['command+enter', 'ctrl+enter'] : _d, _e = _a.serializer, serializer = _e === void 0 ? JSON.parse : _e;
-    var handleSubmit = react_1.useCallback(function (e) {
-        var value = e.target.value;
-        try {
-            var serialized = serializer(value);
-            onSubmit(serialized);
-        }
-        catch (e) {
-            onError(e);
-        }
-    }, [serializer, onSubmit, onError]);
-    var ref = react_hotkeys_hook_1.useHotkeys(__spreadArrays(["tab"], submitKeys).join(','), function (e, handler) {
-        e.preventDefault();
-        var target = ref.current;
-        if (!target)
-            return;
-        if (submitKeys.some(function (key) { return key === handler.key; })) {
-            handleSubmit(e);
-        }
-        else {
-            switch (handler.key) {
-                case "tab":
-                    target.setRangeText("\t");
-                    target.selectionStart += 1;
-                    break;
-            }
-        }
-    }, { enableOnTags: ['TEXTAREA'] }, [handleSubmit, submitKeys]);
-    return ref;
-};
-//# sourceMappingURL=useJsonEditor.js.map
-
-/***/ }),
-
-/***/ "./node_modules/react-plain-json-editor/index.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/react-plain-json-editor/index.js ***!
-  \*******************************************************/
-/*! exports provided: PlainJsonEditor, useJsonEditor */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _dist_PlainJsonEditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dist/PlainJsonEditor */ "./node_modules/react-plain-json-editor/dist/PlainJsonEditor.js");
-/* harmony import */ var _dist_PlainJsonEditor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_dist_PlainJsonEditor__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PlainJsonEditor", function() { return _dist_PlainJsonEditor__WEBPACK_IMPORTED_MODULE_0__["PlainJsonEditor"]; });
-
-/* harmony import */ var _dist_useJsonEditor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dist/useJsonEditor */ "./node_modules/react-plain-json-editor/dist/useJsonEditor.js");
-/* harmony import */ var _dist_useJsonEditor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_dist_useJsonEditor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useJsonEditor", function() { return _dist_useJsonEditor__WEBPACK_IMPORTED_MODULE_1__["useJsonEditor"]; });
-
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/react/cjs/react.development.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/react/cjs/react.development.js ***!
-  \*****************************************************/
+/***/ "../node_modules/react/cjs/react.development.js":
+/*!******************************************************!*\
+  !*** ../node_modules/react/cjs/react.development.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26231,8 +26240,8 @@ if (true) {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
-var checkPropTypes = __webpack_require__(/*! prop-types/checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
+var _assign = __webpack_require__(/*! object-assign */ "../node_modules/object-assign/index.js");
+var checkPropTypes = __webpack_require__(/*! prop-types/checkPropTypes */ "../node_modules/prop-types/checkPropTypes.js");
 
 var ReactVersion = '16.13.1';
 
@@ -28130,10 +28139,10 @@ exports.version = ReactVersion;
 
 /***/ }),
 
-/***/ "./node_modules/react/index.js":
-/*!*************************************!*\
-  !*** ./node_modules/react/index.js ***!
-  \*************************************/
+/***/ "../node_modules/react/index.js":
+/*!**************************************!*\
+  !*** ../node_modules/react/index.js ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28141,16 +28150,16 @@ exports.version = ReactVersion;
 
 
 if (false) {} else {
-  module.exports = __webpack_require__(/*! ./cjs/react.development.js */ "./node_modules/react/cjs/react.development.js");
+  module.exports = __webpack_require__(/*! ./cjs/react.development.js */ "../node_modules/react/cjs/react.development.js");
 }
 
 
 /***/ }),
 
-/***/ "./node_modules/scheduler/cjs/scheduler-tracing.development.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/scheduler/cjs/scheduler-tracing.development.js ***!
-  \*********************************************************************/
+/***/ "../node_modules/scheduler/cjs/scheduler-tracing.development.js":
+/*!**********************************************************************!*\
+  !*** ../node_modules/scheduler/cjs/scheduler-tracing.development.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28508,10 +28517,10 @@ exports.unstable_wrap = unstable_wrap;
 
 /***/ }),
 
-/***/ "./node_modules/scheduler/cjs/scheduler.development.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/scheduler/cjs/scheduler.development.js ***!
-  \*************************************************************/
+/***/ "../node_modules/scheduler/cjs/scheduler.development.js":
+/*!**************************************************************!*\
+  !*** ../node_modules/scheduler/cjs/scheduler.development.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29378,10 +29387,10 @@ exports.unstable_wrapCallback = unstable_wrapCallback;
 
 /***/ }),
 
-/***/ "./node_modules/scheduler/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/scheduler/index.js ***!
-  \*****************************************/
+/***/ "../node_modules/scheduler/index.js":
+/*!******************************************!*\
+  !*** ../node_modules/scheduler/index.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29389,16 +29398,16 @@ exports.unstable_wrapCallback = unstable_wrapCallback;
 
 
 if (false) {} else {
-  module.exports = __webpack_require__(/*! ./cjs/scheduler.development.js */ "./node_modules/scheduler/cjs/scheduler.development.js");
+  module.exports = __webpack_require__(/*! ./cjs/scheduler.development.js */ "../node_modules/scheduler/cjs/scheduler.development.js");
 }
 
 
 /***/ }),
 
-/***/ "./node_modules/scheduler/tracing.js":
-/*!*******************************************!*\
-  !*** ./node_modules/scheduler/tracing.js ***!
-  \*******************************************/
+/***/ "../node_modules/scheduler/tracing.js":
+/*!********************************************!*\
+  !*** ../node_modules/scheduler/tracing.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29406,7 +29415,7 @@ if (false) {} else {
 
 
 if (false) {} else {
-  module.exports = __webpack_require__(/*! ./cjs/scheduler-tracing.development.js */ "./node_modules/scheduler/cjs/scheduler-tracing.development.js");
+  module.exports = __webpack_require__(/*! ./cjs/scheduler-tracing.development.js */ "../node_modules/scheduler/cjs/scheduler-tracing.development.js");
 }
 
 
@@ -29421,13 +29430,10 @@ if (false) {} else {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_plain_json_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-plain-json-editor */ "./node_modules/react-plain-json-editor/index.js");
+/* harmony import */ var react_plain_json_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-plain-json-editor */ "../index.js");
 
-// This import is only for this demo to use the newest version.
-//import { PlainJsonEditor } from '../../../'
-// you would do `npm i react-plain-json-editor` and import it
 
 var App = function () {
     var _a = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
@@ -29477,9 +29483,9 @@ var App = function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "../node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./src/components/App.tsx");
 

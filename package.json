@@ -1,5 +1,6 @@
 {
   "name": "react-plain-json-editor",
+  "version": "0.0.0",
   "author": "nariakiiwatani <nariakiiwatani@annolab.com> (https://github.com/nariakiiwatani",
   "license": "MIT",
   "description": "Provide a simple JSON editor for React",

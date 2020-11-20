@@ -137,7 +137,7 @@ exports.PlainJsonEditor = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "../node_modules/react/index.js"));
 var useJsonEditor_1 = __webpack_require__(/*! ./useJsonEditor */ "../dist/useJsonEditor.js");
 exports.PlainJsonEditor = function (props) {
-    var value = props.value, onChange = props.onChange, onSubmit = props.onSubmit, error = props.error, showInnerError = props.showInnerError, submitKeys = props.submitKeys, serializer = props.serializer, deserializer = props.deserializer, formatAfterSubmit = props.formatAfterSubmit, styles = props.styles;
+    var value = props.value, onChange = props.onChange, onSubmit = props.onSubmit, error = props.error, showInnerError = props.showInnerError, submitKeys = props.submitKeys, serializer = props.serializer, deserializer = props.deserializer, formatAfterSubmit = props.formatAfterSubmit, onSerializeError = props.onSerializeError, styles = props.styles;
     var _a = react_1.useState(function () { return deserializer(value); }), text = _a[0], setText = _a[1];
     var _b = react_1.useState(error), errorText = _b[0], setErrorText = _b[1];
     react_1.useEffect(function () {
@@ -154,6 +154,7 @@ exports.PlainJsonEditor = function (props) {
             showInnerError && clearErrorText();
         }
         catch (e) {
+            onSerializeError(e);
             showInnerError && setErrorText(e.name + ":" + e.message);
         }
     }, [setText, serializer]);
@@ -194,6 +195,7 @@ exports.PlainJsonEditor.defaultProps = {
     serializer: JSON.parse,
     deserializer: function (json) { return JSON.stringify(json, null, 2); },
     formatAfterSubmit: true,
+    onSerializeError: function (e) { },
     styles: {}
 };
 
@@ -29448,6 +29450,9 @@ var App = function () {
     var handleSubmit = function (result) {
         setStyle(result);
     };
+    var handleSerializeError = function (e) {
+        console.info(e);
+    };
     return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", { style: style },
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "PlainJsonEditor Demo"),
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null,
@@ -29458,7 +29463,7 @@ var App = function () {
             "In this demo you can edit this page's style(CSS)."),
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Submit key: Command+Enter or Ctrl+Enter"),
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "current result: " + JSON.stringify(result)),
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_plain_json_editor__WEBPACK_IMPORTED_MODULE_1__["PlainJsonEditor"], { value: style, onChange: handleChange, onSubmit: handleSubmit, styles: {
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_plain_json_editor__WEBPACK_IMPORTED_MODULE_1__["PlainJsonEditor"], { value: style, onChange: handleChange, onSubmit: handleSubmit, onSerializeError: handleSerializeError, styles: {
                 textarea: {
                     backgroundColor: "rgba(0,0,0,0.8)",
                     color: "#CFF",

@@ -11,6 +11,7 @@ type PlainJsonEditorProps = {
 	serializer: (_: string) => {},
 	deserializer: (_: {}) => string,
 	formatAfterSubmit: boolean,
+	onSerializeError: (e: Error) => void,
 	styles: {
 		root?: {},
 		textarea?: {},
@@ -21,6 +22,7 @@ type PlainJsonEditorProps = {
 export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 	const { value, onChange, onSubmit, error, showInnerError,
 		submitKeys, serializer, deserializer, formatAfterSubmit,
+		onSerializeError,
 		styles } = props
 
 	const [text, setText] = useState(() => deserializer(value))
@@ -40,6 +42,7 @@ export const PlainJsonEditor = (props: PlainJsonEditorProps) => {
 			showInnerError && clearErrorText()
 		}
 		catch (e) {
+			onSerializeError(e)
 			showInnerError && setErrorText(`${e.name}:${e.message}`)
 		}
 	}, [setText, serializer])
@@ -107,5 +110,6 @@ PlainJsonEditor.defaultProps = {
 	serializer: JSON.parse,
 	deserializer: (json: {}) => JSON.stringify(json, null, 2),
 	formatAfterSubmit: true,
+	onSerializeError: (e: Error) => { },
 	styles: {}
 };

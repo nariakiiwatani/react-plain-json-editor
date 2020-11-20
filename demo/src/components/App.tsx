@@ -15,6 +15,9 @@ const App = () => {
 	const handleSubmit = (result: {}) => {
 		setStyle(result)
 	}
+	const handleSerializeError = (e: Error) => {
+		console.info(e)
+	}
 	return (
 		<div style={style}>
 			<h1>PlainJsonEditor Demo</h1>
@@ -27,6 +30,7 @@ const App = () => {
 				value={style}
 				onChange={handleChange}
 				onSubmit={handleSubmit}
+				onSerializeError={handleSerializeError}
 				styles={{
 					textarea: {
 						backgroundColor: "rgba(0,0,0,0.8)",
